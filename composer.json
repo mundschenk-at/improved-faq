@@ -22,12 +22,18 @@
             "type": "vcs",
             "url": "https://github.com/mundschenk-at/composer-for-wordpress.git",
             "no-api": true
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/mundschenk-at/arconix-post-type-helper.git",
+            "no-api": true
         }
     ],
 
     "require": {
         "php": ">=5.6.0",
-        "mundschenk-at/check-wp-requirements": "dev-master"
+        "mundschenk-at/check-wp-requirements": "dev-master",
+        "j-gardner/arconix-post-type-helper": "dev-composer"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.0",

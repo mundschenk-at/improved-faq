@@ -64,7 +64,7 @@ final class Improved_FAQ_Plugin {
             'plural' => 'FAQs'
         );
 
-        $pt = new Arconix_CPT_Register();
+        $pt = new Arconix_CPT_Register( 'improved-faq' );
         $pt->add( $names, $settings['post_type']['args'] );
     }
 
@@ -76,7 +76,7 @@ final class Improved_FAQ_Plugin {
     private function register_taxonomy() {
         $settings = $this->settings;
 
-        $tax = new Arconix_Taxonomy_Register();
+        $tax = new Arconix_Taxonomy_Register( 'improved-faq' );
         $tax->add( 'group', 'faq', $settings['taxonomy']['args'] );
     }
 

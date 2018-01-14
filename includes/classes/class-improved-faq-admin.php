@@ -28,28 +28,28 @@ class Improved_FAQ_Admin extends Arconix_CPT_Admin {
     public function __construct() {
         $this->url = trailingslashit( plugin_dir_url( dirname( __FILE__ ) ) );
 
-        parent::__construct( 'faq' );
+        parent::__construct( 'faq', 'improved-faq' );
     }
-    
+
     /**
      * Get our hooks into WordPress
-     * 
+     *
      * Overrides the parent function so we can add our class-specific hooks
-     * 
+     *
      * @since   1.2.0
-     */  
+     */
     public function init() {
         add_action( 'admin_enqueue_scripts',        array( $this, 'admin_scripts' ) );
         add_action( 'wp_dashboard_setup',           array( $this, 'dashboard_widget' ) );
-        
+
         parent::init();
     }
-    
+
     /**
      * Includes admin scripts.
-     * 
+     *
      * To prevent the file from being loaded, add support to your theme
-     * 
+     *
      * @example add_theme_support( 'arconix-faq', 'admin-css' );
      *
      * @since 1.2.0
@@ -67,7 +67,7 @@ class Improved_FAQ_Admin extends Arconix_CPT_Admin {
      * @return  string              New array of columns
      */
     function columns_define( $columns ) {
-        
+
         $answer    = array( 'faq_content'   => __( 'Answer', 'arconix-faq' ) );
         $shortcode = array( 'faq_shortcode' => __( 'Shortcode', 'arconix-faq' ) );
 
@@ -140,6 +140,6 @@ class Improved_FAQ_Admin extends Arconix_CPT_Admin {
         <?php
     }
 
-    
+
 
 }
