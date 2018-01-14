@@ -7,7 +7,7 @@
  * @license     GPLv2 or later
  * @since       1.4.0
  */
-class Arconix_FAQ_Admin extends Arconix_CPT_Admin {
+class Improved_FAQ_Admin extends Arconix_CPT_Admin {
 
     /**
      * The url path to this plugin.
@@ -56,7 +56,7 @@ class Arconix_FAQ_Admin extends Arconix_CPT_Admin {
      */
     function admin_scripts() {
         if ( ! current_theme_supports( 'arconix-faq', 'admin-css' ) && apply_filters( 'pre_register_arconix_faq_admin_css', true ) )
-            wp_enqueue_style( 'arconix-faq-admin', $this->url . 'css/admin.css', false, Arconix_FAQ_Plugin::version );
+            wp_enqueue_style( 'arconix-faq-admin', $this->url . 'css/admin.css', false, Improved_FAQ_Plugin::version );
     }
 
     /**

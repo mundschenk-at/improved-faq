@@ -7,7 +7,7 @@
  * @license     GPLv2 or later
  * @since       1.7.0
  */
-class Arconix_FAQ_Query extends WP_Query {
+class Improved_FAQ_Query extends WP_Query {
     
     /**
      * Constructor

@@ -7,7 +7,7 @@
  * @license     GPLv2 or later
  * @since       1.2.0
  */
-class Arconix_FAQ_Metaboxes {
+class Improved_FAQ_Metaboxes {
     
     /**
      * Get our hooks into WordPress

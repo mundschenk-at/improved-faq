@@ -7,7 +7,7 @@
  * @license     GPLv2 or later
  * @since       1.2.0
  */
-class Arconix_FAQ_Display {
+class Improved_FAQ_Display {
 
     /**
      * Array of query defaults
@@ -89,7 +89,7 @@ class Arconix_FAQ_Display {
                 );
                 
                 // Query our FAQ Posts
-                $q = new Arconix_FAQ_Query( $query_args, $term->slug );
+                $q = new Improved_FAQ_Query( $query_args, $term->slug );
 
                 if ( $q->have_posts() ) {
                     if ( ! $args['hide_title'] )
@@ -125,7 +125,7 @@ class Arconix_FAQ_Display {
         else { // If $terms is blank (faq groups aren't in use) or $skip_group is true
 
             // Set up our standard query args.
-            $q = new Arconix_FAQ_Query( array(
+            $q = new Improved_FAQ_Query( array(
                 'p'                 => $args['p'],
                 'order'             => $args['order'],
                 'orderby'           => $args['orderby'],
