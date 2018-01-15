@@ -39,7 +39,8 @@
         "php": ">=5.6.0",
         "mundschenk-at/check-wp-requirements": "dev-master",
         "j-gardner/arconix-post-type-helper": "dev-composer",
-        "gamajo/dashboard-glancer": "dev-composer"
+        "gamajo/dashboard-glancer": "dev-composer",
+        "webdevstudios/cmb2": "^2.3"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.0",
