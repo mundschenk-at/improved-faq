@@ -9,250 +9,262 @@
  */
 class Improved_FAQ_Display {
 
-    /**
-     * Array of query defaults
-     *
-     * @since   1.6.0
-     * @access  protected
-     * @var     array       $defaults    Plugin query defaults
-     */
-    protected $defaults;
+	/**
+	 * Array of query defaults
+	 *
+	 * @since   1.6.0
+	 * @access  protected
+	 * @var     array       $defaults    Plugin query defaults
+	 */
+	protected $defaults;
 
-    /**
-     * Initialize the class and set its properties.
-     *
-     * @since   1.6.0
-     */
-    public function __construct() {
-        $this->defaults = array(
-            'p'                 => '',
-            'order'             => 'ASC',
-            'orderby'           => 'title',
-            'skip_group'        => false,
-            'style'             => 'toggle',
-            'posts_per_page'    => -1,
-            'nopaging'          => true,
-            'group'             => '',
-            'hide_title'        => false
-        );
-    }
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since   1.6.0
+	 */
+	public function __construct() {
+		$this->defaults = array(
+			'p'              => '',
+			'order'          => 'ASC',
+			'orderby'        => 'title',
+			'skip_group'     => false,
+			'style'          => 'toggle',
+			'posts_per_page' => -1,
+			'nopaging'       => true,
+			'group'          => '',
+			'hide_title'     => false,
+		);
+	}
 
-    /**
-     * Get plugin query defaults
-     *
-     * @since   1.6.0
-     * @return  array                   Filterable query defaults
-     */
-    public function getdefaults() {
-        return apply_filters( 'arconix_faq_defaults', $this->defaults );
-    }
+	/**
+	 * Get plugin query defaults
+	 *
+	 * @since   1.6.0
+	 * @return  array                   Filterable query defaults
+	 */
+	public function getdefaults() {
+		return apply_filters( 'arconix_faq_defaults', $this->defaults );
+	}
 
-    /**
-     * Get our FAQ data
-     *
-     * @since   1.2.0
-     * @param   array       $args       Incoming arguments
-     * @param   bool        $echo       Echo or Return the data
-     * @return  string                  FAQ information for display
-     */
-    public function loop( $args, $echo = false ) {
-        // Merge incoming args with the class defaults
-        $args = wp_parse_args( $args, $this->getdefaults() );
+	/**
+	 * Get our FAQ data
+	 *
+	 * @since   1.2.0
+	 * @param   array $args       Incoming arguments.
+	 * @param   bool  $echo       Echo or Return the data.
+	 * @return  string            FAQ information for display
+	 */
+	public function loop( $args, $echo = false ) {
+		// Merge incoming args with the class defaults.
+		$args = wp_parse_args( $args, $this->getdefaults() );
 
-        // Get the taxonomy terms assigned to all FAQs
-        $terms = get_terms( 'group' );
+		// Get the taxonomy terms assigned to all FAQs.
+		$terms = get_terms( 'group' );
 
-        // Are we skipping the group check?
-        $skip_group = $args['skip_group'];
+		// Are we skipping the group check?
+		$skip_group = $args['skip_group'];
 
-        // Do we have an accordion?
-        $args['style'] == 'accordion' ? $accordion = true : $accordion = false;
+		// Do we have an accordion?
+		'accordion' === $args['style'] ? $accordion = true : $accordion = false;
 
-        // Container
-        $html = '';
+		// Container.
+		$html = '';
 
-        // If there are any terms being used, loop through each one to output the relevant FAQ's, else just output all FAQs
-        if ( ! empty( $terms ) && $skip_group == false && empty( $args['p'] ) ) {
+		// If there are any terms being used, loop through each one to output the relevant FAQs, else just output all FAQs.
+		if ( ! empty( $terms ) && false === $skip_group && empty( $args['p'] ) ) {
+			foreach ( $terms as $term ) {
+				// If a user sets a specific group in the params, that's the only one we care about.
+				$group = $args['group'];
+				if ( isset( $group ) && '' !== $group && $term->slug !== $group ) {
+					continue;
+				}
 
-            foreach ( $terms as $term ) {
+				// Set up our standard query args.
+				$query_args = array(
+					'order'             => $args['order'],
+					'orderby'           => $args['orderby'],
+					'posts_per_page'    => $args['posts_per_page'],
+				);
 
-                // If a user sets a specific group in the params, that's the only one we care about
-                $group = $args['group'];
-                if ( isset( $group ) && $group != '' && $term->slug != $group )
-                    continue;
+				// Query our FAQ Posts.
+				$q = new Improved_FAQ_Query( $query_args, $term->slug );
 
-                // Set up our standard query args.
-                $query_args = array(
-                    'order'             => $args['order'],
-                    'orderby'           => $args['orderby'],
-                    'posts_per_page'    => $args['posts_per_page'],
-                );
-                
-                // Query our FAQ Posts
-                $q = new Improved_FAQ_Query( $query_args, $term->slug );
+				if ( $q->have_posts() ) {
+					if ( ! $args['hide_title'] ) {
+						$html .= '<h3 id="faq-' . $term->slug . '" class="arconix-faq-term-title arconix-faq-term-' . $term->slug . '">' . $term->name . '</h3>';
+					}
 
-                if ( $q->have_posts() ) {
-                    if ( ! $args['hide_title'] )
-                        $html .= '<h3 id="faq-' . $term->slug . '" class="arconix-faq-term-title arconix-faq-term-' . $term->slug . '">' . $term->name . '</h3>';
+					// If the term has a description, show it.
+					if ( $term->description ) {
+						$html .= '<p class="arconix-faq-term-description">' . $term->description . '</p>';
+					}
 
-                    // If the term has a description, show it
-                    if ( $term->description )
-                        $html .= '<p class="arconix-faq-term-description">' . $term->description . '</p>';
+					// Output the accordion wrapper if that style has been set.
+					if ( $accordion ) {
+						$html .= '<div class="arconix-faq-accordion-wrap">';
+					}
 
-                    // Output the accordion wrapper if that style has been set
-                    if ( $accordion )
-                        $html .= '<div class="arconix-faq-accordion-wrap">';
+					// Loop through the rest of the posts for the term.
+					while ( $q->have_posts() ) :
+						$q->the_post();
 
-                    // Loop through the rest of the posts for the term
-                    while ( $q->have_posts() ) : $q->the_post();
+						if ( $accordion ) {
+							$html .= $this->accordion_output();
+						} else {
+							$html .= $this->toggle_output();
+						}
 
-                        if ( $accordion )
-                            $html .= $this->accordion_output();
-                        else
-                            $html .= $this->toggle_output();
+					endwhile;
 
-                    endwhile;
+					// Close the accordion wrapper if necessary.
+					if ( $accordion ) {
+						$html .= '</div>';
+					}
+				} // end have_posts()
 
-                    // Close the accordion wrapper if necessary
-                    if ( $accordion )
-                        $html .= '</div>';
+				wp_reset_postdata();
+			} // end foreach
+		} // End if( $terms )
+		else { // If $terms is blank (faq groups aren't in use) or $skip_group is true.
 
-                } // end have_posts()
+			// Set up our standard query args.
+			$q = new Improved_FAQ_Query( array(
+				'p'                 => $args['p'],
+				'order'             => $args['order'],
+				'orderby'           => $args['orderby'],
+				'posts_per_page'    => $args['posts_per_page'],
+			) );
 
-                wp_reset_postdata();
-            } // end foreach
-        } // End if( $terms )
-        else { // If $terms is blank (faq groups aren't in use) or $skip_group is true
+			if ( $q->have_posts() ) {
+				if ( $accordion ) {
+					$html .= '<div class="arconix-faq-accordion-wrap">';
+				}
 
-            // Set up our standard query args.
-            $q = new Improved_FAQ_Query( array(
-                'p'                 => $args['p'],
-                'order'             => $args['order'],
-                'orderby'           => $args['orderby'],
-                'posts_per_page'    => $args['posts_per_page']
-            ) );
+				while ( $q->have_posts() ) :
+					$q->the_post();
 
-            if ( $q->have_posts() ) {
+					if ( $accordion ) {
+						$html .= $this->accordion_output();
+					} else {
+						$html .= $this->toggle_output();
+					}
 
-                if ( $accordion )
-                    $html .= '<div class="arconix-faq-accordion-wrap">';
+				endwhile;
 
-                while ( $q->have_posts() ) : $q->the_post();
+				if ( $accordion ) {
+					$html .= '</div>';
+				}
+			} // end have_posts()
 
-                    if ( $accordion )
-                        $html .= $this->accordion_output();
-                    else
-                        $html .= $this->toggle_output();
+			wp_reset_postdata();
+		}
 
-                endwhile;
+		// Allow complete override of the FAQ content-
+		$html = apply_filters( 'arconix_faq_return', $html, $args );
 
-                if ( $accordion )
-                    $html .= '</div>';
-            } // end have_posts()
+		if ( true === $echo ) {
+			echo $html;
+		} else {
+			return $html;
+		}
+	}
 
-            wp_reset_postdata();
-        }
+	/**
+	 * Output the FAQs in an accordion style
+	 *
+	 * @since   1.5.0
+	 * @param   bool $echo       Echo or return the results.
+	 *
+	 * @return  string           FAQs in an accordion configuration
+	 */
+	protected function accordion_output( $echo = false ) {
+		$html = '';
 
-        // Allow complete override of the FAQ content
-        $html = apply_filters( 'arconix_faq_return', $html, $args );
+		// Set up our anchor link.
+		$link = 'faq-' . sanitize_html_class( get_the_title() );
 
-        if ( $echo === true )
-            echo $html;
-        else
-            return $html;
-    }
+		$html .= '<div id="faq-' . get_the_id() . '" class="arconix-faq-accordion-title">';
+		$html .= get_the_title() . '</div>';
+		$html .= '<div id="' . $link . '" class="arconix-faq-accordion-content">' . apply_filters( 'the_content', get_the_content() );
+		$html .= $this->return_to_top( $link );
+		$html .= '</div>';
 
-    /**
-     * Output the FAQs in an accordion style
-     *
-     * @since   1.5.0
-     * @param   bool        $echo       Echo or return the results
-     * @return  string                  FAQs in an accordion configuration
-     */
-    protected function accordion_output( $echo = false ) {
-        $html = '';
+		// Allows a user to completely overwrite the output.
+		$html = apply_filters( 'arconix_faq_accordion_output', $html );
 
-        // Set up our anchor link
-        $link = 'faq-' . sanitize_html_class( get_the_title() );
+		if ( true === $echo ) {
+			echo $html;
+		} else {
+			return $html;
+		}
+	}
 
-        $html .= '<div id="faq-' . get_the_id() . '" class="arconix-faq-accordion-title">';
-        $html .= get_the_title() . '</div>';
-        $html .= '<div id="' . $link . '" class="arconix-faq-accordion-content">' . apply_filters( 'the_content', get_the_content() );
-        $html .= $this->return_to_top( $link );
-        $html .= '</div>';
+	/**
+	 * Output the FAQs in a toggle style
+	 *
+	 * @since   1.5.0
+	 * @param   bool $echo       Echo or return the results.
+	 *
+	 * @return  string           FAQs in a toggle configuration
+	 */
+	protected function toggle_output( $echo = false ) {
+		$html = '';
 
-        // Allows a user to completely overwrite the output
-        $html = apply_filters( 'arconix_faq_accordion_output', $html );
+		// Grab our metadata.
+		$lo = get_post_meta( get_the_id(), '_acf_open', true );
 
-        if ( $echo === true )
-            echo $html;
-        else
-            return $html;
-    }
+		// If Open on Load checkbox is true.
+		$lo == true ? $lo = ' faq-open' : $lo = ' faq-closed';
 
-    /**
-     * Output the FAQs in a toggle style
-     *
-     * @since   1.5.0
-     * @param   bool    $echo       Echo or return the results
-     * @return  string              FAQs in a toggle configuration
-     */
-    protected function toggle_output( $echo = false ) {
-        $html = '';
+		// Set up our anchor link.
+		$link = 'faq-' . sanitize_html_class( get_the_title() );
 
-        // Grab our metadata
-        $lo = get_post_meta( get_the_id(), '_acf_open', true );
+		$html .= '<div id="faq-' . get_the_id() . '" class="arconix-faq-wrap">';
+		$html .= '<div id="' . $link . '" class="arconix-faq-title' . $lo . '">' . get_the_title() . '</div>';
+		$html .= '<div class="arconix-faq-content' . $lo . '">' . apply_filters( 'the_content', get_the_content() );
 
-        // If Open on Load checkbox is true
-        $lo == true ? $lo = ' faq-open' : $lo = ' faq-closed';
+		$html .= $this->return_to_top( $link );
 
-        // Set up our anchor link
-        $link = 'faq-' . sanitize_html_class( get_the_title() );
+		$html .= '</div>'; // faq-content.
+		$html .= '</div>'; // faq-wrap.
 
-        $html .= '<div id="faq-' . get_the_id() . '" class="arconix-faq-wrap">';
-        $html .= '<div id="' . $link . '" class="arconix-faq-title' . $lo . '">' . get_the_title() . '</div>';
-        $html .= '<div class="arconix-faq-content' . $lo . '">' . apply_filters( 'the_content', get_the_content() );
+		// Allows a user to completely overwrite the output.
+		$html = apply_filters( 'arconix_faq_toggle_output', $html );
 
-        $html .= $this->return_to_top( $link );
+		if ( true === $echo ) {
+			echo $html;
+		} else {
+			return $html;
+		}
+	}
 
-        $html .= '</div>'; // faq-content
-        $html .= '</div>'; // faq-wrap
+	/**
+	 * Provide a hyperlinked url to return to the top of the current FAQ
+	 *
+	 * @since   1.5.0
+	 * @param   string $link       The faq link to be hyperlinked.
+	 * @param   bool   $echo       Echo or return the results.
+	 * @return  string             Hyperlinked "Return to Top" link.
+	 */
+	public function return_to_top( $link, $echo = false ) {
+		$html = '';
 
-        // Allows a user to completely overwrite the output
-        $html = apply_filters( 'arconix_faq_toggle_output', $html );
+		// Grab our metadata.
+		$rtt = get_post_meta( get_the_id(), '_acf_rtt', true );
 
-        if ( $echo === true )
-            echo $html;
-        else
-            return $html;
-    }
+		// If Return to Top checkbox is true.
+		if ( $rtt && $link ) {
+			$rtt_text = __( 'Return to Top', 'arconix-faq' );
+			$rtt_text = apply_filters( 'arconix_faq_return_to_top_text', $rtt_text );
 
-    /**
-     * Provide a hyperlinked url to return to the top of the current FAQ
-     *
-     * @since   1.5.0
-     * @param   string      $link       The faq link to be hyperlinked
-     * @param   bool        $echo       Echo or return the results
-     * @return  string                  Hyperlinked "Return to Top" link
-     */
-    public function return_to_top( $link, $echo = false ) {
-        $html = '';
+			$html .= '<div class="arconix-faq-to-top"><a href="#' . $link . '">' . $rtt_text . '</a></div>';
+		}
 
-        // Grab our metadata
-        $rtt = get_post_meta( get_the_id(), '_acf_rtt', true );
-
-        // If Return to Top checkbox is true
-        if ( $rtt && $link ) {
-            $rtt_text = __( 'Return to Top', 'arconix-faq' );
-            $rtt_text = apply_filters( 'arconix_faq_return_to_top_text', $rtt_text );
-
-            $html .= '<div class="arconix-faq-to-top"><a href="#' . $link . '">' . $rtt_text . '</a></div>';
-        }
-
-        if ( $echo === true )
-            echo $html;
-        else
-            return $html;
-    }
-
+		if ( true === $echo ) {
+			echo $html;
+		} else {
+			return $html;
+		}
+	}
 }
