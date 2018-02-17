@@ -100,8 +100,7 @@ class Improved_FAQ_Metaboxes {
 		global $post_ID;
 		?>
 		<p class="howto">
-			<?php _e( 'To display this question, copy the code below and paste it into your post, page, text widget or other content area.',
-			'arconix-faq' ); ?>
+			<?php _e( 'To display this question, copy the code below and paste it into your post, page, text widget or other content area.', 'arconix-faq' ); ?>
 		</p>
 		<p><input type="text" value="[faq p=<?php echo $post_ID; ?>]" readonly="readonly" class="widefat wp-ui-text-highlight code"></p>
 		<?php

@@ -184,7 +184,7 @@ class Improved_FAQ_Display {
 			wp_reset_postdata();
 		}
 
-		// Allow complete override of the FAQ content-
+		// Allow complete override of the FAQ content.
 		$html = apply_filters( 'arconix_faq_return', $html, $args );
 
 		if ( true === $echo ) {
@@ -239,7 +239,7 @@ class Improved_FAQ_Display {
 		$lo = get_post_meta( get_the_id(), '_acf_open', true );
 
 		// If Open on Load checkbox is true.
-		$lo == true ? $lo = ' faq-open' : $lo = ' faq-closed';
+		$lo ? $lo = ' faq-open' : $lo = ' faq-closed';
 
 		// Set up our anchor link.
 		$link = 'faq-' . sanitize_html_class( get_the_title() );
@@ -256,7 +256,7 @@ class Improved_FAQ_Display {
 		// Allows a user to completely overwrite the output.
 		$html = apply_filters( 'arconix_faq_toggle_output', $html );
 
-		if ( true === $echo ) {
+		if ( $echo ) {
 			echo $html;
 		} else {
 			return $html;
@@ -285,7 +285,7 @@ class Improved_FAQ_Display {
 			$html .= '<div class="arconix-faq-to-top"><a href="#' . $link . '">' . $rtt_text . '</a></div>';
 		}
 
-		if ( true === $echo ) {
+		if ( $echo ) {
 			echo $html;
 		} else {
 			return $html;
