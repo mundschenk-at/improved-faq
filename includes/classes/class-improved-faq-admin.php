@@ -92,12 +92,17 @@ class Improved_FAQ_Admin extends Arconix_CPT_Admin {
 	 * @return  string            New array of columns
 	 */
 	public function columns_define( $columns ) {
+		// Add Answer column.
+		$columns =
+			array_slice( $columns, 0, 2, true ) +
+			[ 'faq_content' => __( 'Answer', 'arconix-faq' ) ] +
+			array_slice( $columns, 2, null, true );
 
-		$answer    = array( 'faq_content'   => __( 'Answer', 'arconix-faq' ) );
-		$shortcode = array( 'faq_shortcode' => __( 'Shortcode', 'arconix-faq' ) );
-
-		$columns = array_slice( $columns, 0, 2, true ) + $answer    + array_slice( $columns, 2, null, true );
-		$columns = array_slice( $columns, 0, 3, true ) + $shortcode + array_slice( $columns, 3, null, true );
+		// Add Shortcode column.
+		$columns =
+			array_slice( $columns, 0, 3, true ) +
+			[ 'faq_shortcode' => __( 'Shortcode', 'arconix-faq' ) ] +
+			array_slice( $columns, 3, null, true );
 
 		return apply_filters( 'arconix_faq_admin_column_define', $columns );
 	}
