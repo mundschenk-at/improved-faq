@@ -36,9 +36,10 @@ final class Improved_FAQ_Plugin {
 	 * Plugin version.
 	 *
 	 * @since   1.7.0
-	 * @var     string	$version        Plugin version
+	 *
+	 * @var string
 	 */
-	const version = '1.7.0';
+	const VERSION = '1.7.0';
 
 	/**
 	 * Post Type Settings

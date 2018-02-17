@@ -146,11 +146,11 @@ class Improved_FAQ_Public {
 		// Load the CSS - Check the theme directory first, the parent theme (if applicable) second, otherwise load the plugin file.
 		if ( ! current_theme_supports( 'arconix-faq', 'css' ) && apply_filters( 'pre_register_arconix_faq_css', true ) ) {
 			if ( file_exists( get_stylesheet_directory() . '/arconix-faq.css' ) ) {
-				wp_enqueue_style( 'arconix-faq', get_stylesheet_directory_uri() . '/arconix-faq.css', false, Improved_FAQ_Plugin::version );
+				wp_enqueue_style( 'arconix-faq', get_stylesheet_directory_uri() . '/arconix-faq.css', false, Improved_FAQ_Plugin::VERSION );
 			} elseif ( file_exists( get_template_directory() . '/arconix-faq.css' ) ) {
-				wp_enqueue_style( 'arconix-faq', get_template_directory_uri() . '/arconix-faq.css', false, Improved_FAQ_Plugin::version );
+				wp_enqueue_style( 'arconix-faq', get_template_directory_uri() . '/arconix-faq.css', false, Improved_FAQ_Plugin::VERSION );
 			} else {
-				wp_enqueue_style( 'arconix-faq', $this->url . 'css/arconix-faq.css', false, Improved_FAQ_Plugin::version );
+				wp_enqueue_style( 'arconix-faq', $this->url . 'css/arconix-faq.css', false, Improved_FAQ_Plugin::VERSION );
 			}
 		}
 	}
@@ -204,11 +204,11 @@ class Improved_FAQ_Public {
 	public function scripts() {
 		if ( ! current_theme_supports( 'arconix-faq', 'js' ) && apply_filters( 'pre_register_arconix_faq_js', true ) ) {
 			if ( file_exists( get_stylesheet_directory() . '/arconix-faq.js' ) ) {
-				wp_register_script( 'arconix-faq-js', get_stylesheet_directory_uri() . '/arconix-faq.js', array( 'jquery-ui-accordion' ), Improved_FAQ_Plugin::version );
+				wp_register_script( 'arconix-faq-js', get_stylesheet_directory_uri() . '/arconix-faq.js', array( 'jquery-ui-accordion' ), Improved_FAQ_Plugin::VERSION );
 			} elseif ( file_exists( get_template_directory() . '/arconix-faq.js' ) ) {
-				wp_register_script( 'arconix-faq-js', get_template_directory_uri() . '/arconix-faq.js', array( 'jquery-ui-accordion' ), Improved_FAQ_Plugin::version );
+				wp_register_script( 'arconix-faq-js', get_template_directory_uri() . '/arconix-faq.js', array( 'jquery-ui-accordion' ), Improved_FAQ_Plugin::VERSION );
 			} else {
-				wp_register_script( 'arconix-faq-js', $this->url . 'js/arconix-faq.js', array( 'jquery-ui-accordion' ), Improved_FAQ_Plugin::version );
+				wp_register_script( 'arconix-faq-js', $this->url . 'js/arconix-faq.js', array( 'jquery-ui-accordion' ), Improved_FAQ_Plugin::VERSION );
 			}
 		}
 	}

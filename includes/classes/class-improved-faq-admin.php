@@ -79,7 +79,7 @@ class Improved_FAQ_Admin extends Arconix_CPT_Admin {
 	 */
 	public function admin_scripts() {
 		if ( ! current_theme_supports( 'arconix-faq', 'admin-css' ) && apply_filters( 'pre_register_arconix_faq_admin_css', true ) ) {
-			wp_enqueue_style( 'arconix-faq-admin', $this->url . 'css/admin.css', false, Improved_FAQ_Plugin::version );
+			wp_enqueue_style( 'arconix-faq-admin', $this->url . 'css/admin.css', false, Improved_FAQ_Plugin::VERSION );
 		}
 	}
 
