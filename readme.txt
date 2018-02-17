@@ -1,35 +1,22 @@
-=== Arconix FAQ ===
-Contributors: jgardner03
-Donate link: http://arcnx.co/acfdonation
-Tags: arconix, faq, toggle, accordion, faq plugin, frequently asked questions
+=== Improved FAQ ===
+Contributors: pputzer, jgardner03
+Tags: faq, toggle, accordion, frequently asked questions
 Requires at least: 3.8
-Tested up to: 4.4
+Tested up to: 4.9
 Stable tag: 1.6.1
 
-Arconix FAQ provides an easy way to add FAQ items to your website.
+Improved FAQ provides an easy way to add FAQ items to your website.
 
 == Description ==
 
 Add an easy-to-create, stylish FAQ section to your website. Display your frequently asked questions using the supplied shortcode (`[faq]`) and show/hide them via an animated, jQuery toggle or accordion box.
 The FAQ's can be displayed in groups by tagging them during the FAQ item's creation. They can also be loaded closed or open, and for long FAQ's, there's a checkbox to add a "return to top" link at the bottom.
-
-[Live Demo](http://demo.arconixpc.com/arconix-faq)
-[Documentation](http://arcnx.co/afwiki)
+Improved FAQ is based on Arconix FAQ and fully data-compatible.
 
 = Features =
 * Custom Post-Type driven
 * jQuery toggle or accordion display when using the shortcode
 * Can be displayed individually, or in FAQ groups by using the "group" taxonomy
-
-== Installation ==
-
-You can download and install Arconix FAQ using the built in WordPress plugin installer. If you download the plugin manually, make sure the files are uploaded to `/wp-content/plugins/arconix-faq/`.
-
-Activate Arconix-FAQ in the "Plugins" admin panel using the "Activate" link.
-
-== Upgrade Notice ==
-
-Upgrade normally via your WordPress admin -> Plugins panel.
 
 == Frequently Asked Questions ==
 
@@ -39,20 +26,16 @@ Use the `[faq]` shortcode in a widget or on a post/page. This will output the FA
 = How do I enable the accordion display mode? =
 Add `style="accordion"` to the shortcode, e.g. `[faq style="accordion"]`
 
-= Where can I find more information on how to use the plugin?  =
-* Visit the [documentation](http://arcnx.co/afwiki) for assistance
-* Tutorials on advanced plugin usage can be found at [Arconix Computers](http://arconixpc.com/tag/arconix-faq)
-
 = The toggle or accordion isn't working. What can I do? =
-While you can certainly start a thread in the [support forum](http://arcnx.co/afhelp), there are some troubleshooting steps you can take beforehand to help speed up the process.
-1. Check to make sure the javascripts are loading correctly. Load the faq page in your browser and view your page's source. Look for jQuery and Arconix FAQ JS files there. If you don't see the Arconix FAQ JS file, then your theme's `header.php` file is likely missing `<?php wp_head(); ?>`, which is neccessary for the operation of mine and many other plugins.
+While you can certainly start a thread in the [support forum](FIXME), there are some troubleshooting steps you can take beforehand to help speed up the process.
+1. Check to make sure the javascripts are loading correctly. Load the faq page in your browser and view your page's source. Look for jQuery and Improved FAQ JS files there. If you don't see the Improved FAQ JS file, then your theme's `header.php` file is likely missing `<?php wp_head(); ?>`, which is neccessary for the operation of mine and many other plugins.
 2. Check to make sure only one copy of jQuery is being loaded. Many times conflicts arise when themes or plugins load jQuery incorrectly, causing the script to be loaded multiple times in multiple versions. In order to find the offending item, start by disabling your plugins one by one until you find the problem. If you've disabled all your plugins, try switching to a different them, such as twentyten or twentytwelve to see if the problem is with your theme. Once you've found the problem, contact the developer for assistance getting the issue resolved.
 
 = I need help =
-Check out the WordPress [support forum](http://arcnx.co/afhelp)
+Check out the WordPress [support forum](FIXME)
 
 = I have a great idea for your plugin! =
-That's fantastic! Feel free to open an issue or submit a pull request over at [Github](http://arcnx.co/afsource), or you can contact me through [Twitter](http://arcnx.co/twitter), [Facebook](http://arcnx.co/facebook) or my [Website](http://arcnx.co/1)
+That's fantastic! Feel free to open an issue or submit a pull request over at [Github](https://github.com/mundschenk-at/improved-faq), or you can contact me through my [Website](https://code.mundschenk.at).
 
 == Screenshots ==
 1. Post Type in WordPress navigation list
@@ -60,6 +43,10 @@ That's fantastic! Feel free to open an issue or submit a pull request over at [G
 3. Grouping and Toggling display
 
 == Changelog ==
+
+= 1.7.0 =
+Forked Arconix FAQ and refactored the plugin.
+
 = 1.6.1 =
 Fixed a bug which caused the FAQ Group descriptions to output incorrectly when using the accordion style
 
