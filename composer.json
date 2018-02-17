@@ -27,19 +27,14 @@
             "type": "vcs",
             "url": "https://github.com/mundschenk-at/arconix-post-type-helper.git",
             "no-api": true
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/mundschenk-at/gamajo-dashboard-glancer.git",
-            "no-api": true
         }
     ],
 
     "require": {
         "php": ">=5.6.0",
-        "mundschenk-at/check-wp-requirements": "dev-master",
+        "mundschenk-at/check-wp-requirements": "^0.2.0",
         "j-gardner/arconix-post-type-helper": "dev-composer",
-        "gamajo/dashboard-glancer": "dev-composer",
+        "gamajo/dashboard-glancer": "^1.0.4",
         "webdevstudios/cmb2": "^2.3"
     },
     "require-dev": {
