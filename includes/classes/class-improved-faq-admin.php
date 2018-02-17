@@ -62,8 +62,7 @@ class Improved_FAQ_Admin extends Arconix_CPT_Admin {
 	 * @since   1.2.0
 	 */
 	public function init() {
-		add_action( 'admin_enqueue_scripts',        array( $this, 'admin_scripts' ) );
-		add_action( 'wp_dashboard_setup',           array( $this, 'dashboard_widget' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
 		parent::init();
 	}
@@ -131,44 +130,5 @@ class Improved_FAQ_Admin extends Arconix_CPT_Admin {
 			default:
 				break;
 		}
-	}
-
-	/**
-	 * Adds a widget to the dashboard.
-	 *
-	 * @since   1.0.3
-	 */
-	public function dashboard_widget() {
-		if ( apply_filters( 'pre_register_arconix_faq_dashboard_widget', true ) && current_user_can( 'manage_options' ) ) {
-			wp_add_dashboard_widget( 'ac-faq', 'Arconix FAQ', array( $this, 'dashboard_widget_output' ) );
-		}
-	}
-
-	/**
-	 * Add a widget to the dashboard
-	 *
-	 * @since   1.0.3
-	 */
-	public function dashboard_widget_output() {
-		echo '<div class="rss-widget">';
-
-		wp_widget_rss_output( array(
-			'url'           => 'http://arconixpc.com/tag/arconix-faq/feed', // Feed url.
-			'title'         => 'Arconix FAQ', // Feed title.
-			'items'         => 3,             // How many posts to show.
-			'show_summary'  => 1,             // Display excerpt.
-			'show_author'   => 0,             // Display author.
-			'show_date'     => 1,             // Display post date.
-		) );
-
-		?>  <div class="acf-widget-bottom"><ul>;
-				<li><a href="http://arcnx.co/afwiki" class="af-docs">
-					<?php _e( 'Documentation', 'arconix-faq' ); ?></a></li>
-				<li><a href="http://arcnx.co/afhelp" class="af-help">
-					<?php _e( 'Support Forum', 'arconix-faq' ); ?></a></li>
-				<li><a href="http://arcnx.co/afsource" class="af-source">
-					<?php _e( 'Source Code', 'arconix-faq' ); ?></a></li>
-			</ul></div></div>
-		<?php
 	}
 }
